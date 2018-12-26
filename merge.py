@@ -23,9 +23,9 @@ data = pd.read_csv('all.csv',index_col = 0)
 corpus = []
 #X = data['commentText']
 for i in range(len(X)):
-    #review = re.sub('nan',' ',str(X[i]))
-    #review = re.sub('http\S+',' ',str(X[i]))
-    review = re.sub('[^a-zA-Z]',' ',str(X[i]))
+    #review = re.sub('nan',' ',str(X[i]))           #remove nan
+    #review = re.sub('http\S+',' ',str(X[i]))       #remove links
+    review = re.sub('[^a-zA-Z]',' ',str(X[i]))      #remove emojis and punctuations
     review = review.lower()         #run this for last ittration only
     review = review.split()
     review = ' '.join(review)
