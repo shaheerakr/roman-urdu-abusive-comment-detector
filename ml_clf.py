@@ -29,7 +29,7 @@ def getVectors(corpus,vectors,size):
 
 data = pd.read_csv('final.csv')
 
-corpus = [word_tokenize(str(sent)) for sent in data['comment']]
+corpus = [word_tokenize(str(sent)) for sent in data[0]]
 
 vocab_size = 300
 min_counts = 7
@@ -43,7 +43,7 @@ vectors = wv.Word2Vec(corpus,
             workers = n_workers,
             sample = down_sample)
 
-print(vectors.most_similar('chood'))
+print(vectors.most_similar(''))
 
 vec = getVectors(corpus,vectors,vocab_size)
 
