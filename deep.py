@@ -7,6 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/10u3uhh9MmTw86fpR068xExkyWB9z0rlM
 """
 
+import pandas as pd
 data = pd.read_csv('final.csv')
 
 import tensorflow as tf
@@ -37,6 +38,7 @@ Y = to_categorical(data.rating)
 from sklearn.model_selection import train_test_split
 X_train, X_test, Y_train, y_test = train_test_split(corpus,Y, test_size = 0.20, random_state = 123)
 
+import gensim.models.word2vec as wv
 vocab_size = 300
 min_counts = 10
 context = 5
@@ -48,6 +50,8 @@ vectors = wv.Word2Vec(X_train,
                      window = context,
                      min_count = min_counts,
                      sample = down_sample)
+
+import numpy as np
 
 X_train = getVectors(X_train,vectors,vocab_size)
 X_test = getVectors(X_test,vectors,vocab_size)
@@ -78,12 +82,12 @@ classifier.add(Dense(output_dim = 2, init = 'uniform', activation = 'softmax'))
 classifier.compile(optimizer = 'adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
 
 # Fitting the ANN to the Training set
-classifier.fit(X_train, Y_train, batch_size = 50, epochs = 100)
+classifier.fit(X_train, Y_train, batch_size = 50, epochs = 60)
 
 y_pred = classifier.predict(X_test)
 
 y_pred = np.argmax(y_pred,axis = 1)
-#y_test = np.argmax(y_test,axis = 1)
+y_test = np.argmax(y_test,axis = 1)
 
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
@@ -92,5 +96,5 @@ from sklearn.metrics import confusion_matrix
 cm = confusion_matrix(y_test,y_pred)
 print(accuracy_score(y_test, y_pred))
 
-
+classifier.save("deep.h5")
 
