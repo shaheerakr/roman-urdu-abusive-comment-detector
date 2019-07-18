@@ -31,11 +31,11 @@ def getVectors(corpus,vectors,size):
     return vec
 
 def readModel():    
-    f = open('../wv.pickle','rb')
+    f = open('wv.pickle','rb')
     vectors = p.load(f)
     f.close()
     vocab_size = vectors.wv.vectors.shape[1]
-    model = load_model('../deep.h5')
+    model = load_model('deep.h5')
     return  model,vectors,vocab_size
 
 
