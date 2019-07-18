@@ -8,11 +8,9 @@ Created on Sun Jun 30 14:24:37 2019
 
 
 from flask import Flask,render_template,request,redirect,jsonify
-from keras.models import load_model
 import numpy as np
 import pandas as pd
 import pickle as p
-import gensim.models.word2vec as wv
 
 
 
@@ -40,7 +38,7 @@ def readword2vec():
 app = Flask(__name__)
 
 #to render the home template aka index.html
-@app.route('/')
+@app.route('/',methods = ['GET','POST'])
 def home():
     return render_template('index.html')
 
@@ -48,6 +46,8 @@ def home():
 #post api to get data from user and send result to user
 @app.route('/check', methods = ['GET','POST'])
 def check():
+    from keras.models import load_model
+    import gensim.models.word2vec as wv
     if request.method == 'POST':
         sentence = ['']
         sentence = [request.form.get('sent')]
@@ -58,8 +58,9 @@ def check():
         X_sent = np.array(X_sent)
         pred = model.predict(X_sent)
         pred = np.argmax(pred,axis = 1)
-    return render_template('index.html')
-
+        
+        return render_template('result.html',result = pred)
+        
 
 
 if __name__ == '__main__':
