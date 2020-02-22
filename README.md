@@ -28,5 +28,20 @@ curl -d '{"sentences":["tum ache insan ho","tu ha kia pagal?"]}' -H "Content-Typ
 * The response will have a key results which will have a list of predictions (abusive/not abusive) with the original sentences
 * the response of above curl request is given below
 ```
-{"results":[{"prediction":"not abusive","sentence":"tum ache insan ho"},{"prediction":"abusive","sentence":"tu ha kia pagal?"}],"uuid":"123"}
+{
+   "results":[
+      {
+         "prediction":"not abusive",
+         "sentence":"tum ache insan ho"
+      
+},
+      {
+         "prediction":"abusive",
+         "sentence":"tu ha kia pagal?"
+      
+}
+   
+],
+   "uuid":"123"
+}
 ```
